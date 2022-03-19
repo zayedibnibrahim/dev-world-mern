@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://devworld:devworld_3996@cluster0.6gnbd.mongodb.net/DevWorld?retryWrites=true&w=majority"
+}
