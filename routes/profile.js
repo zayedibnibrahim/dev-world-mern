@@ -1,4 +1,5 @@
 const express = require('express')
+const router = express.Router()
 const {
   currentUserProfile,
   createProfile,
@@ -17,7 +18,6 @@ const {
   validateExperience,
   validateEducation,
 } = require('../validations/profile')
-const router = express.Router()
 
 router
   .route('/')
