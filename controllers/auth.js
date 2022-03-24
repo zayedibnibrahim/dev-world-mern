@@ -16,7 +16,7 @@ exports.authUser = async (req, res) => {
 }
 
 // @route      POST api/users
-// @desc       Register User
+// @desc       Login User
 // @access     Public
 exports.loginUser = async (req, res) => {
   const error = validationResult(req)

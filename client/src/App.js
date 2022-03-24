@@ -1,20 +1,21 @@
 import { Routes, Route } from 'react-router-dom'
-import Landing from './Screen/Landing'
+import Landing from './screen/Landing'
 import Navbar from './components/layout/Navbar'
-import Login from './Screen/Login'
-import Register from './Screen/Register'
+import Login from './screen/Login'
+import Register from './screen/Register'
 import './App.css'
 
 const App = () => {
   return (
-    <div>
-      <Navbar></Navbar>
+    <>
+      <Navbar />
+
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
       </Routes>
-    </div>
+    </>
   )
 }
 
