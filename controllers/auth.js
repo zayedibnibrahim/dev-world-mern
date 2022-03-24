@@ -1,5 +1,5 @@
 const User = require('../models/users')
-const { check, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const generateToken = require('../utils/generateToken')
 
@@ -11,7 +11,7 @@ exports.authUser = async (req, res) => {
     res.json(req.user)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -28,11 +28,11 @@ exports.loginUser = async (req, res) => {
     try {
       const userExist = await User.findOne({ email })
       if (!userExist) {
-        res.status(400).json({ error: [{ msg: "User doesn't exist" }] })
+        res.status(400).json({ error: { msg: "User doesn't exist" } })
       } else {
         const isMatch = await bcrypt.compare(password, userExist.password)
         if (!isMatch) {
-          res.status(400).json({ error: [{ msg: "Password Doesn't match" }] })
+          res.status(400).json({ error: { msg: "Password Doesn't match" } })
         } else {
           res.json({
             _id: userExist._id,
@@ -44,7 +44,7 @@ exports.loginUser = async (req, res) => {
       }
     } catch (error) {
       console.log(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }

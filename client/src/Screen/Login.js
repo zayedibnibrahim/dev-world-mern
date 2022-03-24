@@ -1,8 +1,16 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { loginUser } from '../actions/authActions'
 
 const Login = () => {
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { error, userInfo } = userLogin
+
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -14,28 +22,17 @@ const Login = () => {
   }
   const onSubmit = async (e) => {
     e.preventDefault()
-
-    const newUser = {
-      email,
-      password,
-    }
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-      const body = JSON.stringify(newUser)
-      const { data } = await axios.post('/api/auth', body, config)
-
-      console.log(data)
-    } catch (error) {
-      console.error(error.response.data)
-    }
+    dispatch(loginUser(email, password))
   }
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard')
+    }
+  }, [userInfo, navigate])
   return (
     <section className='container'>
-      {/* <div className='alert alert-danger'>Invalid credentials</div> */}
+      {error ? <div className='alert alert-danger'>{error}</div> : ''}
       <h1 className='large text-primary'>Sign In</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Sign into Your Account
@@ -58,6 +55,7 @@ const Login = () => {
             name='password'
             onChange={(e) => onChange(e)}
             value={password}
+            required
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Login' />

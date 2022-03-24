@@ -18,7 +18,7 @@ exports.currentUserProfile = async (req, res) => {
     res.send(profile)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -80,7 +80,7 @@ exports.createProfile = async (req, res) => {
       }
     } catch (error) {
       console.error(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
@@ -98,7 +98,7 @@ exports.usersProfile = async (req, res) => {
     res.json(profiles)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -121,7 +121,7 @@ exports.userProfileById = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'There is no profile for this user' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -139,7 +139,7 @@ exports.userProfileDelete = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'There is no profile for this user' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -172,7 +172,7 @@ exports.addExperience = async (req, res) => {
       res.json(profile)
     } catch (error) {
       console.error(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
@@ -193,7 +193,7 @@ exports.deleteExperience = async (req, res) => {
     res.json(profile)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -226,7 +226,7 @@ exports.addEducation = async (req, res) => {
       res.json(profile)
     } catch (error) {
       console.error(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
@@ -247,7 +247,7 @@ exports.deleteEducation = async (req, res) => {
     res.json(profile)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -273,6 +273,6 @@ exports.userGitRepos = async (req, res) => {
     })
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }

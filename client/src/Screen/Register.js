@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import { registerUser } from '../actions/authActions'
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -9,7 +9,7 @@ const Register = () => {
     password: '',
     password2: '',
   })
-
+  const dispatch = useDispatch()
   const [alert, setAlert] = useState('')
 
   const { name, email, password, password2 } = formData
@@ -25,26 +25,11 @@ const Register = () => {
     if (password !== password2) {
       setAlert('Password do not match')
     } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      }
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-        const body = JSON.stringify(newUser)
-        const { data } = await axios.post('/api/users', body, config)
-
-        setAlert('')
-      } catch (error) {
-        setAlert(error.response.data.error[0].msg)
-      }
+      dispatch(registerUser(name, email, password))
+      setAlert('')
     }
   }
+
   return (
     <section className='container'>
       {alert ? <div className='alert alert-danger'>{alert}</div> : ''}

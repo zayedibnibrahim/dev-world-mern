@@ -26,7 +26,7 @@ exports.createPost = async (req, res) => {
       res.json(post)
     } catch (error) {
       console.error(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
@@ -40,7 +40,7 @@ exports.allPosts = async (req, res) => {
     res.json(posts)
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -59,7 +59,7 @@ exports.getPostById = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Post not found' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -84,7 +84,7 @@ exports.deletePostById = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Post not found' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -113,7 +113,7 @@ exports.likePost = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Post not found' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -145,7 +145,7 @@ exports.unLikePost = async (req, res) => {
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Post not found' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }
 
@@ -177,7 +177,7 @@ exports.commentPost = async (req, res) => {
       }
     } catch (error) {
       console.error(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
@@ -211,6 +211,6 @@ exports.deleteComment = async (req, res) => {
     res.json({ msg: 'Comment Deleted' })
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ error: { msg: 'Server Error' } })
   }
 }

@@ -18,7 +18,7 @@ exports.registerUser = async (req, res) => {
     try {
       const userExist = await User.findOne({ email })
       if (userExist) {
-        res.status(409).json({ error: [{ msg: 'User Already exist' }] })
+        res.status(409).json({ error: { msg: 'User Already exist' } })
       } else {
         const avatar = gravatar.url(email, {
           s: '200',
@@ -36,19 +36,18 @@ exports.registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(password, salt)
 
-        await user.save()
+        const regUser = await user.save()
 
-        if (user) {
+        if (regUser._id) {
           res.json({
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id),
+            name: regUser.name,
+            email: regUser.email,
+            token: generateToken(regUser._id),
           })
         }
       }
     } catch (error) {
-      console.log(error.message)
-      res.status(500).send('Server Error')
+      res.status(500).json({ error: { msg: 'Server Error' } })
     }
   }
 }
