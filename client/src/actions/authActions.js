@@ -10,6 +10,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from '../constants/authConstants'
+import { CURRENT_USER_PROFILE_RESET } from '../constants/profileConstants'
 
 // export const loadUser = () => async (dispatch, getState) => {
 //   try {
@@ -103,4 +104,5 @@ export const loginUser = (email, password) => async (dispatch) => {
 export const logOut = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
+  dispatch({ type: CURRENT_USER_PROFILE_RESET })
 }

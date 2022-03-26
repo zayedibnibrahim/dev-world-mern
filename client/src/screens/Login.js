@@ -5,11 +5,9 @@ import { loginUser } from '../actions/authActions'
 
 const Login = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const userLogin = useSelector((state) => state.userLogin)
   const { error, userInfo } = userLogin
-
-  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     email: '',

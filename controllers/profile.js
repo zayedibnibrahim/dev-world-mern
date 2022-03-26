@@ -5,7 +5,7 @@ const User = require('../models/users')
 
 // @route      GET api/profile/me
 // @desc       Get current use profile
-// @access     Protected
+// @access     Protect
 exports.currentUserProfile = async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate(
@@ -13,7 +13,9 @@ exports.currentUserProfile = async (req, res) => {
       ['name', 'avatar', 'email']
     )
     if (!profile) {
-      return res.status(400).json({ msg: 'There is no profile for this user' })
+      return res
+        .status(400)
+        .json({ error: { msg: 'There is no profile for this user' } })
     }
     res.send(profile)
   } catch (error) {

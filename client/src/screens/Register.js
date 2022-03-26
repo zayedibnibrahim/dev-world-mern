@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../actions/authActions'
 const Register = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   })
-  const dispatch = useDispatch()
-  const [alert, setAlert] = useState('')
-
   const { name, email, password, password2 } = formData
+  const [alert, setAlert] = useState('')
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -29,7 +34,11 @@ const Register = () => {
       setAlert('')
     }
   }
-
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard')
+    }
+  }, [userInfo, navigate])
   return (
     <section className='container'>
       {alert ? <div className='alert alert-danger'>{alert}</div> : ''}
