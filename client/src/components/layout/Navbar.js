@@ -20,7 +20,7 @@ const Navbar = () => {
       <ul>
         <li>
           <Link to='/developer'>
-            <i class='fa-solid fa-laptop-code'></i> Developers
+            <i className='fa-solid fa-laptop-code'></i> Developers
           </Link>
         </li>
 
@@ -29,13 +29,13 @@ const Navbar = () => {
             <li>
               <span>
                 <Link to='/dashboard'>
-                  <i class='fa-solid fa-gauge-high'></i> Dashboard
+                  <i className='fa-solid fa-gauge-high'></i> Dashboard
                 </Link>
               </span>
             </li>
             <li>
               <a onClick={logOutHandler} href='#!'>
-                <i class='fa-solid fa-right-from-bracket'></i> Log Out
+                <i className='fa-solid fa-right-from-bracket'></i> Log Out
               </a>
             </li>
           </>
@@ -43,12 +43,12 @@ const Navbar = () => {
           <>
             <li>
               <Link to='/register'>
-                <i class='fa-solid fa-user-plus'></i> Register
+                <i className='fa-solid fa-user-plus'></i> Register
               </Link>
             </li>
             <li>
               <Link to='/login'>
-                <i class='fa-solid fa-right-to-bracket'></i> Login
+                <i className='fa-solid fa-right-to-bracket'></i> Login
               </Link>
             </li>
           </>

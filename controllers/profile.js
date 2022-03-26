@@ -14,10 +14,11 @@ exports.currentUserProfile = async (req, res) => {
     )
     if (!profile) {
       return res
-        .status(400)
+        .status(404)
         .json({ error: { msg: 'There is no profile for this user' } })
+    } else {
+      return res.send(profile)
     }
-    res.send(profile)
   } catch (error) {
     console.error(error.message)
     res.status(500).json({ error: { msg: 'Server Error' } })

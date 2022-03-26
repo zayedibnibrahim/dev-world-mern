@@ -6,6 +6,7 @@ import Register from './screens/Register'
 import './App.css'
 import Dashboard from './screens/Dashboard'
 import PrivateOutlet from './components/layout/PrivateOutlet'
+import CreateProfile from './screens/CreateProfile'
 // import { useEffect } from 'react'
 // import { useDispatch } from 'react-redux'
 // import { loadUser } from './actions/authActions'
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='register' element={<Register />} />
         <Route path='/*' element={<PrivateOutlet />}>
           <Route path='dashboard' element={<Dashboard />} />
+          <Route path='create-profile' element={<CreateProfile />} />
         </Route>
       </Routes>
     </>
