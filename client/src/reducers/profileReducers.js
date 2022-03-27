@@ -1,4 +1,8 @@
 import {
+  ADD_EXPERIENCE_FAIL,
+  ADD_EXPERIENCE_REQUEST,
+  ADD_EXPERIENCE_RESET,
+  ADD_EXPERIENCE_SUCCESS,
   CREATE_PROFILE_FAIL,
   CREATE_PROFILE_REQUEST,
   CREATE_PROFILE_RESET,
@@ -40,6 +44,23 @@ export const createProfileReducer = (state = {}, action) => {
     case CREATE_PROFILE_FAIL:
       return { loading: false, error: payload }
     case CREATE_PROFILE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const addExperienceReducer = (state = {}, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case ADD_EXPERIENCE_REQUEST:
+      return { loading: true }
+    case ADD_EXPERIENCE_SUCCESS:
+      return { loading: false, success: true }
+    case ADD_EXPERIENCE_FAIL:
+      return { loading: false, error: payload }
+    case ADD_EXPERIENCE_RESET:
       return {}
     default:
       return state

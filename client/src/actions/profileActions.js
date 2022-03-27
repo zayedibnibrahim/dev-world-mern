@@ -1,5 +1,8 @@
 import axios from 'axios'
 import {
+  ADD_EXPERIENCE_FAIL,
+  ADD_EXPERIENCE_REQUEST,
+  ADD_EXPERIENCE_SUCCESS,
   CREATE_PROFILE_FAIL,
   CREATE_PROFILE_REQUEST,
   CREATE_PROFILE_SUCCESS,
@@ -99,10 +102,12 @@ export const profileCreate = (formData) => async (dispatch, getState) => {
   }
 }
 
-export const userAddExperience = () => async (dispatch, getState) => {
+export const userAddExperience = (formData) => async (dispatch, getState) => {
+  const { title, company, location, from, to, current, description } = formData
+
   try {
     dispatch({
-      type: CURRENT_USER_PROFILE_REQUEST,
+      type: ADD_EXPERIENCE_REQUEST,
     })
 
     const {
@@ -115,15 +120,19 @@ export const userAddExperience = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get('/api/profile/me', config)
+    const { data } = await axios.put(
+      '/api/profile/experience',
+      { title, company, location, from, to, current, description },
+      config
+    )
 
     dispatch({
-      type: CURRENT_USER_PROFILE_SUCCESS,
+      type: ADD_EXPERIENCE_SUCCESS,
       payload: data,
     })
   } catch (error) {
     dispatch({
-      type: CURRENT_USER_PROFILE_FAIL,
+      type: ADD_EXPERIENCE_FAIL,
       payload: error.response && error.response.data?.error?.msg,
     })
   }
