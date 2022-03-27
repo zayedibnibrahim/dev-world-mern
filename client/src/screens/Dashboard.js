@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { UserCurrentProfile } from '../actions/profileActions'
+import { userCurrentProfile } from '../actions/profileActions'
+import DashboardActions from '../components/DashboardActions'
 import Spinner from '../components/Spinner'
 
 const Dashboard = () => {
@@ -14,10 +15,8 @@ const Dashboard = () => {
   const currentUserProfile = useSelector((state) => state.currentUserProfile)
   const { userProfile, loading } = currentUserProfile
 
-  console.log(userProfile)
-
   useEffect(() => {
-    dispatch(UserCurrentProfile())
+    dispatch(userCurrentProfile())
   }, [dispatch])
   return loadingUser || loading ? (
     <Spinner />
@@ -36,18 +35,7 @@ const Dashboard = () => {
         </>
       ) : (
         <>
-          <div className='dash-buttons'>
-            <a href='edit-profile.html' className='btn btn-light'>
-              <i className='fas fa-user-circle text-primary'></i> Edit Profile
-            </a>
-            <a href='add-experience.html' className='btn btn-light'>
-              <i className='fab fa-black-tie text-primary'></i> Add Experience
-            </a>
-            <a href='add-education.html' className='btn btn-light'>
-              <i className='fas fa-graduation-cap text-primary'></i> Add
-              Education
-            </a>
-          </div>
+          <DashboardActions />
 
           <h2 className='my-2'>Experience Credentials</h2>
           <table className='table'>

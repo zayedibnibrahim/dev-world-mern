@@ -1,6 +1,7 @@
 import {
   CREATE_PROFILE_FAIL,
   CREATE_PROFILE_REQUEST,
+  CREATE_PROFILE_RESET,
   CREATE_PROFILE_SUCCESS,
   CURRENT_USER_PROFILE_FAIL,
   CURRENT_USER_PROFILE_REQUEST,
@@ -38,6 +39,8 @@ export const createProfileReducer = (state = {}, action) => {
       return { loading: false, success: true }
     case CREATE_PROFILE_FAIL:
       return { loading: false, error: payload }
+    case CREATE_PROFILE_RESET:
+      return {}
     default:
       return state
   }

@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { profileCreate } from '../../actions/profileActions'
+import { Link, useNavigate } from 'react-router-dom'
+import { profileCreate } from '../actions/profileActions'
+import { CREATE_PROFILE_RESET } from '../constants/profileConstants'
 
-const CreateProfileForm = () => {
+const EditProfile = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const currentUserProfile = useSelector((state) => state.currentUserProfile)
+  const { error, userProfile, loading } = currentUserProfile
+
   const createProfile = useSelector((state) => state.createProfile)
-  const { error, success, loading } = createProfile
+  const { error: errorCreate, success, loading: landingCreate } = createProfile
+
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -18,11 +26,32 @@ const CreateProfileForm = () => {
     facebook: '',
     youtube: '',
     instagram: '',
+    linkedin: '',
   })
 
-  const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  useEffect(() => {
+    if (!success) {
+      setFormData({
+        company: userProfile.company ? userProfile.company : '',
+        website: userProfile.website ? userProfile.website : '',
+        location: userProfile.location ? userProfile.location : '',
+        status: userProfile.status ? userProfile.status : '',
+        githubusername: userProfile.githubusername
+          ? userProfile.githubusername
+          : '',
+        bio: userProfile.bio ? userProfile.bio : '',
+        skills: userProfile.skills ? userProfile.skills.join(',') : '',
+        twitter: userProfile.social ? userProfile.social.twitter : '',
+        facebook: userProfile.social ? userProfile.social.facebook : '',
+        youtube: userProfile.social ? userProfile.social.youtube : '',
+        instagram: userProfile.social ? userProfile.social.instagram : '',
+        linkedin: userProfile.social ? userProfile.social.linkedin : '',
+      })
+    } else {
+      navigate('/dashboard')
+      dispatch({ type: CREATE_PROFILE_RESET })
+    }
+  }, [success])
 
   const {
     company,
@@ -38,6 +67,10 @@ const CreateProfileForm = () => {
     instagram,
     linkedin,
   } = formData
+
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -58,18 +91,17 @@ const CreateProfileForm = () => {
       })
     )
   }
-  if (success) {
-    alert('updated done')
-  }
+
   return (
-    <>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+    <section className='container'>
+      <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>
           <select
             name='status'
             onChange={(e) => {
               onChange(e)
             }}
+            value={status}
           >
             <option value='0'>* Select Professional Status</option>
             <option value='Developer'>Developer</option>
@@ -93,6 +125,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={company}
           />
           <small className='form-text'>
             Could be your own company or one you work for
@@ -106,6 +139,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={website}
           />
           <small className='form-text'>
             Could be your own or a company website
@@ -119,6 +153,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={location}
           />
           <small className='form-text'>
             City & state suggested (eg. Boston, MA)
@@ -132,6 +167,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={skills}
           />
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -145,6 +181,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={githubusername}
           />
           <small className='form-text'>
             If you want your latest repos and a Github link, include your
@@ -158,6 +195,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={bio}
           ></textarea>
           <small className='form-text'>Tell us a little about yourself</small>
         </div>
@@ -178,6 +216,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={twitter}
           />
         </div>
 
@@ -190,6 +229,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={facebook}
           />
         </div>
 
@@ -202,6 +242,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={youtube}
           />
         </div>
 
@@ -214,6 +255,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={linkedin}
           />
         </div>
 
@@ -226,6 +268,7 @@ const CreateProfileForm = () => {
             onChange={(e) => {
               onChange(e)
             }}
+            value={instagram}
           />
         </div>
         <input
@@ -235,12 +278,12 @@ const CreateProfileForm = () => {
             onChange(e)
           }}
         />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
-        </a>
+        </Link>
       </form>
-    </>
+    </section>
   )
 }
 
-export default CreateProfileForm
+export default EditProfile
