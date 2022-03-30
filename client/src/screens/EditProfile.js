@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { profileCreate } from '../actions/profileActions'
 import { CREATE_PROFILE_RESET } from '../constants/profileConstants'
+import Spinner from '../components/Spinner'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const currentUserProfile = useSelector((state) => state.currentUserProfile)
-  const { error, userProfile, loading } = currentUserProfile
+  const { error, userProfile } = currentUserProfile
 
   const createProfile = useSelector((state) => state.createProfile)
   const { error: errorCreate, success, loading: landingCreate } = createProfile
@@ -92,7 +93,9 @@ const EditProfile = () => {
     )
   }
 
-  return (
+  return landingCreate ? (
+    <Spinner />
+  ) : (
     <section className='container'>
       <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>

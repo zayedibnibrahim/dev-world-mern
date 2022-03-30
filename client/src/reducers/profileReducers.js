@@ -1,4 +1,8 @@
 import {
+  ADD_EDUCATION_FAIL,
+  ADD_EDUCATION_REQUEST,
+  ADD_EDUCATION_RESET,
+  ADD_EDUCATION_SUCCESS,
   ADD_EXPERIENCE_FAIL,
   ADD_EXPERIENCE_REQUEST,
   ADD_EXPERIENCE_RESET,
@@ -11,6 +15,14 @@ import {
   CURRENT_USER_PROFILE_REQUEST,
   CURRENT_USER_PROFILE_RESET,
   CURRENT_USER_PROFILE_SUCCESS,
+  DELETE_EDUCATION_FAIL,
+  DELETE_EDUCATION_REQUEST,
+  DELETE_EDUCATION_RESET,
+  DELETE_EDUCATION_SUCCESS,
+  DELETE_EXPERIENCE_FAIL,
+  DELETE_EXPERIENCE_REQUEST,
+  DELETE_EXPERIENCE_RESET,
+  DELETE_EXPERIENCE_SUCCESS,
 } from '../constants/profileConstants'
 
 export const currentUserProfileReducer = (
@@ -61,6 +73,57 @@ export const addExperienceReducer = (state = {}, action) => {
     case ADD_EXPERIENCE_FAIL:
       return { loading: false, error: payload }
     case ADD_EXPERIENCE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const addEducationReducer = (state = {}, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case ADD_EDUCATION_REQUEST:
+      return { loading: true }
+    case ADD_EDUCATION_SUCCESS:
+      return { loading: false, success: true }
+    case ADD_EDUCATION_FAIL:
+      return { loading: false, error: payload }
+    case ADD_EDUCATION_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const deleteExperienceReducer = (state = {}, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case DELETE_EXPERIENCE_REQUEST:
+      return { loading: true }
+    case DELETE_EXPERIENCE_SUCCESS:
+      return { loading: false, success: true }
+    case DELETE_EXPERIENCE_FAIL:
+      return { loading: false, error: payload }
+    case DELETE_EXPERIENCE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const deleteEducationReducer = (state = {}, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case DELETE_EDUCATION_REQUEST:
+      return { loading: true }
+    case DELETE_EDUCATION_SUCCESS:
+      return { loading: false, success: true }
+    case DELETE_EDUCATION_FAIL:
+      return { loading: false, error: payload }
+    case DELETE_EDUCATION_RESET:
       return {}
     default:
       return state

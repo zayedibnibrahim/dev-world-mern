@@ -2,9 +2,19 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { userCurrentProfile } from '../actions/profileActions'
+import {
+  userCurrentProfile,
+  userDeleteExperience,
+  userDeleteEducation,
+} from '../actions/profileActions'
 import DashboardActions from '../components/DashboardActions'
+import EducationCatalog from '../components/EducationCatalog'
+import ExperienceCatalog from '../components/ExperienceCatalog'
 import Spinner from '../components/Spinner'
+import {
+  DELETE_EDUCATION_RESET,
+  DELETE_EXPERIENCE_RESET,
+} from '../constants/profileConstants'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -15,9 +25,35 @@ const Dashboard = () => {
   const currentUserProfile = useSelector((state) => state.currentUserProfile)
   const { userProfile, loading } = currentUserProfile
 
+  const deleteExperience = useSelector((state) => state.deleteExperience)
+  const { success: successDeleteExp } = deleteExperience
+
+  const deleteEducation = useSelector((state) => state.deleteEducation)
+  const { success: successDeleteEdu } = deleteEducation
+
+  const experienceDeleteHandler = (id) => {
+    dispatch(userDeleteExperience(id))
+  }
+
+  const educationDeleteHandler = (id) => {
+    dispatch(userDeleteEducation(id))
+  }
+
   useEffect(() => {
     dispatch(userCurrentProfile())
-  }, [dispatch])
+    if (successDeleteExp) {
+      dispatch({
+        type: DELETE_EXPERIENCE_RESET,
+      })
+    }
+
+    if (successDeleteEdu) {
+      dispatch({
+        type: DELETE_EDUCATION_RESET,
+      })
+    }
+  }, [successDeleteExp, successDeleteEdu])
+
   return loadingUser || loading ? (
     <Spinner />
   ) : (
@@ -37,57 +73,26 @@ const Dashboard = () => {
         <>
           <DashboardActions />
 
-          <h2 className='my-2'>Experience Credentials</h2>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>Company</th>
-                <th className='hide-sm'>Title</th>
-                <th className='hide-sm'>Years</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Tech Guy Web Solutions</td>
-                <td className='hide-sm'>Senior Developer</td>
-                <td className='hide-sm'>02-03-2009 - 01-02-2014</td>
-                <td>
-                  <button className='btn btn-danger'>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Traversy Media</td>
-                <td className='hide-sm'>Instructor & Developer</td>
-                <td className='hide-sm'>02-03-2015 - Now</td>
-                <td>
-                  <button className='btn btn-danger'>Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h2 className='my-2'>Education Credentials</h2>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>School</th>
-                <th className='hide-sm'>Degree</th>
-                <th className='hide-sm'>Years</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Northern Essex</td>
-                <td className='hide-sm'>Associates</td>
-                <td className='hide-sm'>02-03-2007 - 01-02-2009</td>
-                <td>
-                  <button className='btn btn-danger'>Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {userProfile && userProfile.experience.length !== 0 ? (
+            <ExperienceCatalog
+              experiences={userProfile.experience}
+              experienceDeleteHandler={experienceDeleteHandler}
+            />
+          ) : (
+            <p style={{ color: 'red', marginTop: '20px' }}>
+              No Experience added yet
+            </p>
+          )}
+          {userProfile && userProfile.education.length !== 0 ? (
+            <EducationCatalog
+              educations={userProfile.education}
+              educationDeleteHandler={educationDeleteHandler}
+            />
+          ) : (
+            <p style={{ color: 'red', marginTop: '20px' }}>
+              No Education added yet
+            </p>
+          )}
         </>
       )}
 

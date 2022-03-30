@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../actions/authActions'
 const Register = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const location = useLocation()
-  console.log(location)
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin

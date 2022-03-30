@@ -1,5 +1,8 @@
 import axios from 'axios'
 import {
+  ADD_EDUCATION_FAIL,
+  ADD_EDUCATION_REQUEST,
+  ADD_EDUCATION_SUCCESS,
   ADD_EXPERIENCE_FAIL,
   ADD_EXPERIENCE_REQUEST,
   ADD_EXPERIENCE_SUCCESS,
@@ -9,6 +12,12 @@ import {
   CURRENT_USER_PROFILE_FAIL,
   CURRENT_USER_PROFILE_REQUEST,
   CURRENT_USER_PROFILE_SUCCESS,
+  DELETE_EDUCATION_FAIL,
+  DELETE_EDUCATION_REQUEST,
+  DELETE_EDUCATION_SUCCESS,
+  DELETE_EXPERIENCE_FAIL,
+  DELETE_EXPERIENCE_REQUEST,
+  DELETE_EXPERIENCE_SUCCESS,
 } from '../constants/profileConstants'
 
 export const userCurrentProfile = () => async (dispatch, getState) => {
@@ -67,6 +76,7 @@ export const profileCreate = (formData) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
@@ -116,6 +126,7 @@ export const userAddExperience = (formData) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
@@ -133,6 +144,104 @@ export const userAddExperience = (formData) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADD_EXPERIENCE_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const userAddEducation = (formData) => async (dispatch, getState) => {
+  const { school, degree, fieldofstudy, from, to, current, description } =
+    formData
+
+  try {
+    dispatch({
+      type: ADD_EDUCATION_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      '/api/profile/education',
+      { school, degree, fieldofstudy, from, to, current, description },
+      config
+    )
+
+    dispatch({
+      type: ADD_EDUCATION_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ADD_EDUCATION_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const userDeleteExperience = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DELETE_EXPERIENCE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.delete(`/api/profile/experience/${id}`, config)
+
+    dispatch({
+      type: DELETE_EXPERIENCE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: DELETE_EXPERIENCE_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const userDeleteEducation = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DELETE_EDUCATION_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.delete(`/api/profile/education/${id}`, config)
+
+    dispatch({
+      type: DELETE_EDUCATION_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: DELETE_EDUCATION_FAIL,
       payload: error.response && error.response.data?.error?.msg,
     })
   }
