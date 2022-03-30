@@ -6,6 +6,7 @@ import {
   userCurrentProfile,
   userDeleteExperience,
   userDeleteEducation,
+  userDeleteAccount,
 } from '../actions/profileActions'
 import DashboardActions from '../components/DashboardActions'
 import EducationCatalog from '../components/EducationCatalog'
@@ -32,11 +33,25 @@ const Dashboard = () => {
   const { success: successDeleteEdu } = deleteEducation
 
   const experienceDeleteHandler = (id) => {
-    dispatch(userDeleteExperience(id))
+    if (window.confirm('Are you sure you want to delete?')) {
+      dispatch(userDeleteExperience(id))
+    }
   }
 
   const educationDeleteHandler = (id) => {
-    dispatch(userDeleteEducation(id))
+    if (window.confirm('Are you sure you want to delete?')) {
+      dispatch(userDeleteEducation(id))
+    }
+  }
+
+  const accountDeleteHandler = () => {
+    if (
+      window.confirm(
+        'Are you sure you want to delete the your account? THIS CANT BE UNDONE!'
+      )
+    ) {
+      dispatch(userDeleteAccount())
+    }
   }
 
   useEffect(() => {
@@ -97,7 +112,7 @@ const Dashboard = () => {
       )}
 
       <div className='my-2'>
-        <button className='btn btn-danger'>
+        <button className='btn btn-danger' onClick={accountDeleteHandler}>
           <i className='fas fa-user-minus'></i>
           Delete My Account
         </button>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../actions/authActions'
+import { USER_LOGOUT } from '../constants/authConstants'
 const Register = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,6 +29,9 @@ const Register = () => {
     if (password !== password2) {
       setAlert('Password do not match')
     } else {
+      dispatch({
+        type: USER_LOGOUT,
+      })
       dispatch(registerUser(name, email, password))
       setAlert('')
     }

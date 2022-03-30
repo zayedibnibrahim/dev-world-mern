@@ -140,7 +140,9 @@ exports.userProfileDelete = async (req, res) => {
   } catch (error) {
     console.error(error.message)
     if (error.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'There is no profile for this user' })
+      return res
+        .status(400)
+        .json({ error: { msg: 'There is no profile for this user' } })
     }
     res.status(500).json({ error: { msg: 'Server Error' } })
   }

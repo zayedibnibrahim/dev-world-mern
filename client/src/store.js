@@ -7,6 +7,7 @@ import {
   addExperienceReducer,
   createProfileReducer,
   currentUserProfileReducer,
+  deleteAccountReducer,
   deleteEducationReducer,
   deleteExperienceReducer,
 } from './reducers/profileReducers'
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   addEducation: addEducationReducer,
   deleteExperience: deleteExperienceReducer,
   deleteEducation: deleteEducationReducer,
+  deleteAccount: deleteAccountReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

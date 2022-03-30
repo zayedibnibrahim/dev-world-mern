@@ -15,6 +15,10 @@ import {
   CURRENT_USER_PROFILE_REQUEST,
   CURRENT_USER_PROFILE_RESET,
   CURRENT_USER_PROFILE_SUCCESS,
+  DELETE_ACCOUNT_FAIL,
+  DELETE_ACCOUNT_REQUEST,
+  DELETE_ACCOUNT_RESET,
+  DELETE_ACCOUNT_SUCCESS,
   DELETE_EDUCATION_FAIL,
   DELETE_EDUCATION_REQUEST,
   DELETE_EDUCATION_RESET,
@@ -124,6 +128,23 @@ export const deleteEducationReducer = (state = {}, action) => {
     case DELETE_EDUCATION_FAIL:
       return { loading: false, error: payload }
     case DELETE_EDUCATION_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const deleteAccountReducer = (state = {}, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case DELETE_ACCOUNT_REQUEST:
+      return { loading: true }
+    case DELETE_ACCOUNT_SUCCESS:
+      return { loading: false }
+    case DELETE_ACCOUNT_FAIL:
+      return { loading: false, error: payload }
+    case DELETE_ACCOUNT_RESET:
       return {}
     default:
       return state
