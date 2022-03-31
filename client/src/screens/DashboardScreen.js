@@ -17,7 +17,7 @@ import {
   DELETE_EXPERIENCE_RESET,
 } from '../constants/profileConstants'
 
-const Dashboard = () => {
+const DashboardScreen = () => {
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -121,4 +121,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default DashboardScreen

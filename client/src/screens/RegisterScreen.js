@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../actions/authActions'
 import { USER_LOGOUT } from '../constants/authConstants'
-const Register = () => {
+
+const RegisterScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -102,4 +103,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterScreen

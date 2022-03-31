@@ -115,14 +115,18 @@ exports.userProfileById = async (req, res) => {
     }).populate('user', ['name', 'avatar', 'email'])
 
     if (!profile) {
-      return res.status(400).json({ msg: 'There is no profile for this user' })
+      return res
+        .status(404)
+        .json({ error: { msg: 'There is no profile for this user' } })
     } else {
       res.json(profile)
     }
   } catch (error) {
     console.error(error.message)
     if (error.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'There is no profile for this user' })
+      return res
+        .status(404)
+        .json({ error: { msg: 'There is no profile for this user' } })
     }
     res.status(500).json({ error: { msg: 'Server Error' } })
   }
@@ -268,10 +272,13 @@ exports.userGitRepos = async (req, res) => {
     }
 
     request(options, (error, response, body) => {
+      console.log(body)
       if (error) console.error(error)
 
       if (response.statusCode !== 200) {
-        return res.status(400).json({ msg: 'No Github Profile Found' })
+        return res
+          .status(400)
+          .json({ error: { msg: 'No Github Profile Found' } })
       }
 
       res.json(JSON.parse(body))

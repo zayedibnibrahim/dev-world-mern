@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../actions/authActions'
 import { USER_LOGOUT } from '../constants/authConstants'
 
-const Login = () => {
+const LoginScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userLogin = useSelector((state) => state.userLogin)
@@ -69,4 +69,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginScreen

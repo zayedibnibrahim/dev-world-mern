@@ -27,6 +27,17 @@ import {
   DELETE_EXPERIENCE_REQUEST,
   DELETE_EXPERIENCE_RESET,
   DELETE_EXPERIENCE_SUCCESS,
+  FETCH_GITHUB_FAIL,
+  FETCH_GITHUB_REQUEST,
+  FETCH_GITHUB_RESET,
+  FETCH_GITHUB_SUCCESS,
+  GET_PROFILE_FAIL,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_RESET,
+  GET_PROFILE_SUCCESS,
+  PROFILE_LIST_FAIL,
+  PROFILE_LIST_REQUEST,
+  PROFILE_LIST_SUCCESS,
 } from '../constants/profileConstants'
 
 export const currentUserProfileReducer = (
@@ -146,6 +157,55 @@ export const deleteAccountReducer = (state = {}, action) => {
       return { loading: false, error: payload }
     case DELETE_ACCOUNT_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const listProfilesReducer = (state = { profiles: [] }, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case PROFILE_LIST_REQUEST:
+      return { ...state, loading: true }
+    case PROFILE_LIST_SUCCESS:
+      return { loading: false, profiles: payload }
+    case PROFILE_LIST_FAIL:
+      return { loading: false, error: payload }
+    default:
+      return state
+  }
+}
+
+export const getProfileReducer = (state = { profile: {} }, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case GET_PROFILE_REQUEST:
+      return { ...state, loading: true }
+    case GET_PROFILE_SUCCESS:
+      return { loading: false, profile: payload }
+    case GET_PROFILE_FAIL:
+      return { loading: false, error: payload }
+    case GET_PROFILE_RESET:
+      return { profile: {} }
+    default:
+      return state
+  }
+}
+
+export const fetchGithubReducer = (state = { gitInfo: [] }, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case FETCH_GITHUB_REQUEST:
+      return { ...state, loading: true }
+    case FETCH_GITHUB_SUCCESS:
+      return { loading: false, gitInfo: payload }
+    case FETCH_GITHUB_FAIL:
+      return { loading: false, error: payload }
+    case FETCH_GITHUB_RESET:
+      return { gitInfo: [] }
     default:
       return state
   }

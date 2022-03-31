@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { profileCreate } from '../actions/profileActions'
 import { CREATE_PROFILE_RESET } from '../constants/profileConstants'
+import Spinner from '../components/Spinner'
 
-const CreateProfile = () => {
+const EditProfileScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const currentUserProfile = useSelector((state) => state.currentUserProfile)
+  const { error, userProfile } = currentUserProfile
+
   const createProfile = useSelector((state) => state.createProfile)
-  const { error, success, loading } = createProfile
+  const { error: errorCreate, success, loading: landingCreate } = createProfile
 
   const [formData, setFormData] = useState({
     company: '',
@@ -24,6 +29,30 @@ const CreateProfile = () => {
     instagram: '',
     linkedin: '',
   })
+
+  useEffect(() => {
+    if (!success) {
+      setFormData({
+        company: userProfile.company ? userProfile.company : '',
+        website: userProfile.website ? userProfile.website : '',
+        location: userProfile.location ? userProfile.location : '',
+        status: userProfile.status ? userProfile.status : '',
+        githubusername: userProfile.githubusername
+          ? userProfile.githubusername
+          : '',
+        bio: userProfile.bio ? userProfile.bio : '',
+        skills: userProfile.skills ? userProfile.skills.join(',') : '',
+        twitter: userProfile.social ? userProfile.social.twitter : '',
+        facebook: userProfile.social ? userProfile.social.facebook : '',
+        youtube: userProfile.social ? userProfile.social.youtube : '',
+        instagram: userProfile.social ? userProfile.social.instagram : '',
+        linkedin: userProfile.social ? userProfile.social.linkedin : '',
+      })
+    } else {
+      navigate('/dashboard')
+      dispatch({ type: CREATE_PROFILE_RESET })
+    }
+  }, [success])
 
   const {
     company,
@@ -64,14 +93,9 @@ const CreateProfile = () => {
     )
   }
 
-  useEffect(() => {
-    if (success) {
-      navigate('/dashboard')
-      dispatch({ type: CREATE_PROFILE_RESET })
-    }
-  }, [success])
-
-  return (
+  return landingCreate ? (
+    <Spinner />
+  ) : (
     <section className='container'>
       <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>
@@ -113,7 +137,7 @@ const CreateProfile = () => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Website'
+            placeholder='Website ex: https://example.com'
             name='website'
             onChange={(e) => {
               onChange(e)
@@ -265,4 +289,4 @@ const CreateProfile = () => {
   )
 }
 
-export default CreateProfile
+export default EditProfileScreen

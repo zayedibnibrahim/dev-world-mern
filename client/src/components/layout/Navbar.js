@@ -19,7 +19,7 @@ const Navbar = () => {
       </h1>
       <ul>
         <li>
-          <Link to='/developer'>
+          <Link to='/developers'>
             <i className='fa-solid fa-laptop-code'></i> Developers
           </Link>
         </li>

@@ -23,6 +23,15 @@ import {
   DELETE_EXPERIENCE_FAIL,
   DELETE_EXPERIENCE_REQUEST,
   DELETE_EXPERIENCE_SUCCESS,
+  FETCH_GITHUB_FAIL,
+  FETCH_GITHUB_REQUEST,
+  FETCH_GITHUB_SUCCESS,
+  GET_PROFILE_FAIL,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  PROFILE_LIST_FAIL,
+  PROFILE_LIST_REQUEST,
+  PROFILE_LIST_SUCCESS,
 } from '../constants/profileConstants'
 
 export const userCurrentProfile = () => async (dispatch, getState) => {
@@ -276,6 +285,64 @@ export const userDeleteAccount = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DELETE_ACCOUNT_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const profilesList = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_LIST_REQUEST,
+    })
+
+    const { data } = await axios.get(`/api/profile`)
+
+    dispatch({
+      type: PROFILE_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PROFILE_LIST_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const profileById = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_PROFILE_REQUEST,
+    })
+
+    const { data } = await axios.get(`/api/profile/user/${id}`)
+    dispatch({
+      type: GET_PROFILE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_PROFILE_FAIL,
+      payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const githubRepoFetch = (username) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FETCH_GITHUB_REQUEST,
+    })
+
+    const { data } = await axios.get(`/api/profile/github/${username}`)
+    dispatch({
+      type: FETCH_GITHUB_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: FETCH_GITHUB_FAIL,
       payload: error.response && error.response.data?.error?.msg,
     })
   }

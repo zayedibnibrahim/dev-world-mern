@@ -10,6 +10,9 @@ import {
   deleteAccountReducer,
   deleteEducationReducer,
   deleteExperienceReducer,
+  fetchGithubReducer,
+  getProfileReducer,
+  listProfilesReducer,
 } from './reducers/profileReducers'
 
 const reducer = combineReducers({
@@ -22,6 +25,9 @@ const reducer = combineReducers({
   deleteExperience: deleteExperienceReducer,
   deleteEducation: deleteEducationReducer,
   deleteAccount: deleteAccountReducer,
+  listProfiles: listProfilesReducer,
+  getProfile: getProfileReducer,
+  fetchGithub: fetchGithubReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
