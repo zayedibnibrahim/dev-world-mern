@@ -6,8 +6,8 @@ const ProfileEducationBlock = ({ education }) => {
     <div className='profile-edu bg-white p-2'>
       <h2 className='text-primary'>Education</h2>
       {education && education.length !== 0 ? (
-        education.map((edu) => (
-          <div>
+        education.map((edu, index) => (
+          <div key={index + 1}>
             <h3>{edu.school}</h3>
             <p>
               {edu.from && <Moment format='MMMM YYYY'>{edu.from}</Moment>} -{' '}

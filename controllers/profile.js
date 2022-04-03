@@ -272,7 +272,6 @@ exports.userGitRepos = async (req, res) => {
     }
 
     request(options, (error, response, body) => {
-      console.log(body)
       if (error) console.error(error)
 
       if (response.statusCode !== 200) {
