@@ -50,6 +50,10 @@ const PostSchema = new Schema({
       },
     },
   ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 const Post = mongoose.model('post', PostSchema)

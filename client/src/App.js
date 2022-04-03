@@ -12,6 +12,7 @@ import EditProfileScreen from './screens/EditProfileScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import PostsScreen from './screens/PostsScreen'
 // import { useEffect } from 'react'
 // import { useDispatch } from 'react-redux'
 // import { loadUser } from './actions/authActions'
@@ -39,6 +40,7 @@ const App = () => {
           <Route path='edit-profile' element={<EditProfileScreen />} />
           <Route path='add-experience' element={<AddExperienceScreen />} />
           <Route path='add-education' element={<AddEducationScreen />} />
+          <Route path='posts' element={<PostsScreen />} />
         </Route>
       </Routes>
     </>

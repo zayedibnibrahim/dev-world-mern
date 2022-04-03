@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { loginUser } from '../actions/authActions'
 import { USER_LOGOUT } from '../constants/authConstants'
 
 const LoginScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const from = location.state?.from?.pathname || '/dashboard'
+
   const userLogin = useSelector((state) => state.userLogin)
   const { error, userInfo } = userLogin
 
@@ -29,9 +33,9 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/dashboard')
+      navigate(from, { replace: true })
     }
-  }, [userInfo, navigate])
+  }, [userInfo, navigate, from])
   return (
     <section className='container'>
       {error ? <div className='alert alert-danger'>{error}</div> : ''}
