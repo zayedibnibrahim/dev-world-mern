@@ -8,8 +8,8 @@ import {
   //   USER_LOAD_FAIL,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
 } from '../constants/authConstants'
+import { GET_ALL_POST_RESET } from '../constants/postConstants'
 import { CURRENT_USER_PROFILE_RESET } from '../constants/profileConstants'
 
 // export const loadUser = () => async (dispatch, getState) => {
@@ -105,4 +105,5 @@ export const logOut = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: CURRENT_USER_PROFILE_RESET })
+  dispatch({ type: GET_ALL_POST_RESET })
 }

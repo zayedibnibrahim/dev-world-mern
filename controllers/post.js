@@ -12,17 +12,15 @@ exports.createPost = async (req, res) => {
     return res.status(400).json({ error: error.array() })
   } else {
     try {
-      const user = await User.findById(req.user.id).select('-password')
+      const user = await User.findById(req.user.id)
       const post = new Post({
         text: req.body.text,
-        posttext: req.body.posttext,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
       })
 
       await post.save()
-
       res.json(post)
     } catch (error) {
       console.error(error.message)
@@ -124,26 +122,26 @@ exports.unLikePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' })
+      return res.status(404).json({ error: { msg: 'Post not found' } })
     } else {
       if (
         post.likes.filter((like) => like.user.toString() === req.user.id)
           .length === 0
       ) {
-        return res.status(400).json({ msg: 'Post Has not Liked' })
+        return res.status(400).json({ error: { msg: 'Post Has not Liked' } })
       } else {
         const removeIndex = post.likes.map((like) =>
           like.user.toString().indexOf(req.user.id)
         )
         post.likes.splice(removeIndex, 1)
         await post.save()
-        res.json({ msg: 'Post Unlike' })
+        res.json(post.likes)
       }
     }
   } catch (error) {
     console.error(error.message)
     if (error.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'Post not found' })
+      return res.status(400).json({ error: { msg: 'Post not found' } })
     }
     res.status(500).json({ error: { msg: 'Server Error' } })
   }
@@ -161,7 +159,7 @@ exports.commentPost = async (req, res) => {
       const post = await Post.findById(req.params.id)
 
       if (!post) {
-        return res.status(404).json({ msg: 'Post not found' })
+        return res.status(404).json({ error: { msg: 'Post not found' } })
       } else {
         const user = await User.findById(req.user.id)
         const newComment = {
@@ -193,11 +191,11 @@ exports.deleteComment = async (req, res) => {
     )
 
     if (!comment) {
-      return res.status(404).json({ msg: 'Comment not found' })
+      return res.status(404).json({ error: { msg: 'Comment not found' } })
     }
 
     if (comment.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User is not authorize' })
+      return res.status(401).json({ error: { msg: 'User is not authorize' } })
     }
 
     const removeIndex = post.comments.map((comment) =>

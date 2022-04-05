@@ -28,6 +28,13 @@ const Navbar = () => {
           <>
             <li>
               <span>
+                <Link to='/posts'>
+                  <i className='fa-solid fa-gauge-high'></i> Posts
+                </Link>
+              </span>
+            </li>
+            <li>
+              <span>
                 <Link to='/dashboard'>
                   <i className='fa-solid fa-gauge-high'></i> Dashboard
                 </Link>

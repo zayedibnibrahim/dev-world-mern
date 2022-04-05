@@ -1,7 +1,14 @@
 import React from 'react'
 import Moment from 'react-moment'
+import { Link } from 'react-router-dom'
 
-const PostCard = ({ post, likeHandler, disLikeHandler }) => {
+const PostCard = ({
+  post,
+  likeHandler,
+  disLikeHandler,
+  userInfo,
+  deleteHandler,
+}) => {
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
@@ -11,7 +18,7 @@ const PostCard = ({ post, likeHandler, disLikeHandler }) => {
         </a>
       </div>
       <div>
-        <p className='my-1'>{post.posttext}</p>
+        <p className='my-1'>{post.text}</p>
         <p className='post-date'>
           Posted on <Moment format='DD/MM/YYYY'>{post.data}</Moment>
         </p>
@@ -21,7 +28,7 @@ const PostCard = ({ post, likeHandler, disLikeHandler }) => {
           onClick={() => likeHandler(post._id)}
         >
           <i className='fas fa-thumbs-up'></i>
-          <span>{post.likes?.length}</span>
+          {post.likes?.length > 0 && <span>{post.likes?.length}</span>}
         </button>
         <button
           type='button'
@@ -30,13 +37,20 @@ const PostCard = ({ post, likeHandler, disLikeHandler }) => {
         >
           <i className='fas fa-thumbs-down'></i>
         </button>
-        <a href='post.html' className='btn btn-primary'>
+        <Link to={`/post/${post._id}`} className='btn btn-primary'>
           Discussion{' '}
           <span className='comment-count'>{post.comments?.length}</span>
-        </a>
-        <button type='button' className='btn btn-danger'>
-          <i className='fas fa-times'></i>
-        </button>
+        </Link>
+
+        {userInfo && post.user === userInfo._id && (
+          <button
+            type='button'
+            className='btn btn-danger'
+            onClick={() => deleteHandler(post._id)}
+          >
+            <i className='fas fa-times'></i>
+          </button>
+        )}
       </div>
     </div>
   )

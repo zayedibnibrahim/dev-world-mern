@@ -2,7 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { userLoginReducer, userRegisterReducer } from './reducers/authReducers'
-import { getPostsReducer } from './reducers/postReducers'
+import {
+  createPostReducer,
+  getPostsReducer,
+  singlePostReducer,
+} from './reducers/postReducers'
 import {
   addEducationReducer,
   addExperienceReducer,
@@ -30,6 +34,8 @@ const reducer = combineReducers({
   getProfile: getProfileReducer,
   fetchGithub: fetchGithubReducer,
   getPosts: getPostsReducer,
+  createPost: createPostReducer,
+  singlePost: singlePostReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
