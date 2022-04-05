@@ -1,7 +1,6 @@
 import {
-  CREATE_POST_FAIL,
-  CREATE_POST_REQUEST,
-  CREATE_POST_RESET,
+  COMMENT_CREATE_SUCCESS,
+  COMMENT_DELETE_SUCCESS,
   CREATE_POST_SUCCESS,
   DELETE_POST_SUCCESS,
   GET_ALL_POST_FAIL,
@@ -23,7 +22,12 @@ export const getPostsReducer = (state = { posts: [] }, action) => {
       return { ...state, loading: true }
     case GET_ALL_POST_SUCCESS:
       return { loading: false, posts: payload }
-
+    case CREATE_POST_SUCCESS:
+      return {
+        ...state,
+        posts: [...state.posts, payload],
+        loading: false,
+      }
     case UPDATE_LIKE_SUCCESS:
       return {
         ...state,
@@ -46,29 +50,27 @@ export const getPostsReducer = (state = { posts: [] }, action) => {
   }
 }
 
-export const createPostReducer = (state = {}, action) => {
-  const { type, payload } = action
-  switch (type) {
-    case CREATE_POST_REQUEST:
-      return { loading: true }
-    case CREATE_POST_SUCCESS:
-      return { loading: false, success: true }
-    case CREATE_POST_FAIL:
-      return { loading: false, error: payload }
-    case CREATE_POST_RESET:
-      return {}
-    default:
-      return state
-  }
-}
-
 export const singlePostReducer = (state = { post: {} }, action) => {
   const { type, payload } = action
+
   switch (type) {
     case SINGLE_POST_REQUEST:
       return { loading: true }
     case SINGLE_POST_SUCCESS:
       return { loading: false, post: payload }
+    case COMMENT_DELETE_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            (comment) => comment._id !== payload
+          ),
+        },
+        loading: false,
+      }
+    case COMMENT_CREATE_SUCCESS:
+      return { ...state, post: { ...state.post, comments: payload } }
     case SINGLE_POST_FAIL:
       return { loading: false, error: payload }
     case SINGLE_POST_RESET:

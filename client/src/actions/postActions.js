@@ -1,5 +1,7 @@
 import axios from 'axios'
 import {
+  COMMENT_CREATE_SUCCESS,
+  COMMENT_DELETE_SUCCESS,
   CREATE_POST_FAIL,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
@@ -29,14 +31,15 @@ export const postsCreate = (text) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    await axios.post(`/api/post`, { text }, config)
+    const { data } = await axios.post(`/api/post`, { text }, config)
 
     dispatch({
       type: CREATE_POST_SUCCESS,
+      payload: data,
     })
   } catch (error) {
     dispatch({
-      type: CREATE_POST_FAIL,
+      type: GET_ALL_POST_FAIL,
       payload: error.response && error.response.data?.error?.msg,
     })
   }
@@ -173,6 +176,63 @@ export const postDelete = (id) => async (dispatch, getState) => {
     dispatch({
       type: DELETE_POST_FAIL,
       payload: error.response && error.response.data?.error?.msg,
+    })
+  }
+}
+
+export const commentDelete =
+  (postId, commentId) => async (dispatch, getState) => {
+    try {
+      const {
+        userLogin: { userInfo },
+      } = getState()
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+
+      await axios.put(`/api/post/comment/${postId}/${commentId}`, {}, config)
+
+      dispatch({
+        type: COMMENT_DELETE_SUCCESS,
+        payload: commentId,
+      })
+    } catch (error) {
+      dispatch({
+        type: SINGLE_POST_FAIL,
+        payload: error?.response?.data?.error?.msg,
+      })
+    }
+  }
+
+export const commentCreate = (id, text) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `/api/post/comment/${id}`,
+      { text },
+      config
+    )
+
+    dispatch({
+      type: COMMENT_CREATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SINGLE_POST_FAIL,
+      payload: error?.response?.data?.error?.msg,
     })
   }
 }

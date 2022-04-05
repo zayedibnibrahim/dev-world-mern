@@ -34,7 +34,6 @@ const reducer = combineReducers({
   getProfile: getProfileReducer,
   fetchGithub: fetchGithubReducer,
   getPosts: getPostsReducer,
-  createPost: createPostReducer,
   singlePost: singlePostReducer,
 })
 

@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { singlePostGet } from '../actions/postActions'
+import {
+  commentCreate,
+  commentDelete,
+  singlePostGet,
+} from '../actions/postActions'
 import CommentCard from '../components/CommentCard'
 import Spinner from '../components/Spinner'
 
 const SinglePostScreen = () => {
   const params = useParams()
   const dispatch = useDispatch()
+
+  const [text, setText] = useState('')
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -16,7 +22,12 @@ const SinglePostScreen = () => {
   const { error, post, loading } = singlePost
 
   const deleteCommentHandler = (postId, commentId) => {
-    console.log(postId, commentId)
+    dispatch(commentDelete(postId, commentId))
+  }
+  const makeCommentHandler = (e) => {
+    e.preventDefault()
+    dispatch(commentCreate(post._id, text))
+    setText('')
   }
 
   useEffect(() => {
@@ -43,15 +54,21 @@ const SinglePostScreen = () => {
         <div className='bg-primary p'>
           <h3>Leave A Comment</h3>
         </div>
-        <form className='form my-1'>
+        <form className='form my-1' onSubmit={makeCommentHandler}>
           <textarea
             name='text'
             cols='30'
             rows='5'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
             placeholder='Comment on this post'
             required
           ></textarea>
-          <input type='submit' className='btn btn-dark my-1' value='Submit' />
+          <input
+            type='submit'
+            className='btn btn-dark my-1'
+            value='Add Comment'
+          />
         </form>
       </div>
       <div className='comments'>
