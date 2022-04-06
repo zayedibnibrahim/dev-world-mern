@@ -46,7 +46,7 @@ const AddExperienceScreen = () => {
 
   useEffect(() => {
     if (success) {
-      navigate('/dashboard')
+      navigate('/dev/dashboard')
       dispatch({ type: ADD_EXPERIENCE_RESET })
     }
   }, [success])
@@ -147,7 +147,7 @@ const AddExperienceScreen = () => {
           ></textarea>
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/dashboard'>
+        <Link className='btn btn-light my-1' to='/dev/dashboard'>
           Go Back
         </Link>
       </form>

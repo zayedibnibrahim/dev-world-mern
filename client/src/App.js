@@ -14,6 +14,7 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import PostsScreen from './screens/PostsScreen'
 import SinglePostScreen from './screens/SinglePostScreen'
+import NotFoundScreen from './screens/NotFoundScreen'
 // import { useEffect } from 'react'
 // import { useDispatch } from 'react-redux'
 // import { loadUser } from './actions/authActions'
@@ -31,11 +32,11 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<HomeScreen />} />
-        <Route path='login' element={<LoginScreen />} />
-        <Route path='register' element={<RegisterScreen />} />
-        <Route path='developers' element={<DevelopersScreen />} />
-        <Route path='profile/:id' element={<ProfileScreen />} />
-        <Route path='/*' element={<PrivateOutlet />}>
+        <Route path='/login' element={<LoginScreen />} />
+        <Route path='/register' element={<RegisterScreen />} />
+        <Route path='/developers' element={<DevelopersScreen />} />
+        <Route path='/profile/:id' element={<ProfileScreen />} />
+        <Route path='/dev/*' element={<PrivateOutlet />}>
           <Route path='dashboard' element={<DashboardScreen />} />
           <Route path='create-profile' element={<CreateProfileScreen />} />
           <Route path='edit-profile' element={<EditProfileScreen />} />
@@ -44,6 +45,7 @@ const App = () => {
           <Route path='posts' element={<PostsScreen />} />
           <Route path='post/:id' element={<SinglePostScreen />} />
         </Route>
+        <Route path='*' element={<NotFoundScreen />} />
       </Routes>
     </>
   )

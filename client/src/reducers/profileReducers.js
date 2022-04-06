@@ -50,9 +50,9 @@ export const currentUserProfileReducer = (
     case CURRENT_USER_PROFILE_REQUEST:
       return { ...state, loading: true }
     case CURRENT_USER_PROFILE_SUCCESS:
-      return { loading: false, userProfile: payload }
+      return { ...state, loading: false, userProfile: payload }
     case CURRENT_USER_PROFILE_FAIL:
-      return { loading: false, error: payload, userProfile: {} }
+      return { ...state, loading: false, error: payload, userProfile: {} }
     case CURRENT_USER_PROFILE_RESET:
       return { userProfile: {} }
     default:
@@ -169,9 +169,9 @@ export const listProfilesReducer = (state = { profiles: [] }, action) => {
     case PROFILE_LIST_REQUEST:
       return { ...state, loading: true }
     case PROFILE_LIST_SUCCESS:
-      return { loading: false, profiles: payload }
+      return { ...state, loading: false, profiles: payload }
     case PROFILE_LIST_FAIL:
-      return { loading: false, error: payload }
+      return { ...state, loading: false, error: payload }
     default:
       return state
   }
@@ -184,9 +184,9 @@ export const getProfileReducer = (state = { profile: {} }, action) => {
     case GET_PROFILE_REQUEST:
       return { ...state, loading: true }
     case GET_PROFILE_SUCCESS:
-      return { loading: false, profile: payload }
+      return { ...state, loading: false, profile: payload }
     case GET_PROFILE_FAIL:
-      return { loading: false, error: payload }
+      return { ...state, loading: false, error: payload }
     case GET_PROFILE_RESET:
       return { profile: {} }
     default:
@@ -201,9 +201,9 @@ export const fetchGithubReducer = (state = { gitInfo: [] }, action) => {
     case FETCH_GITHUB_REQUEST:
       return { ...state, loading: true }
     case FETCH_GITHUB_SUCCESS:
-      return { loading: false, gitInfo: payload }
+      return { ...state, loading: false, gitInfo: payload }
     case FETCH_GITHUB_FAIL:
-      return { loading: false, error: payload }
+      return { ...state, loading: false, error: payload }
     case FETCH_GITHUB_RESET:
       return { gitInfo: [] }
     default:

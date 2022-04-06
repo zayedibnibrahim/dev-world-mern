@@ -66,7 +66,7 @@ const CreateProfileScreen = () => {
 
   useEffect(() => {
     if (success) {
-      navigate('/dashboard')
+      navigate('/dev/dashboard')
       dispatch({ type: CREATE_PROFILE_RESET })
     }
   }, [success])
@@ -257,7 +257,7 @@ const CreateProfileScreen = () => {
             onChange(e)
           }}
         />
-        <Link className='btn btn-light my-1' to='/dashboard'>
+        <Link className='btn btn-light my-1' to='/dev/dashboard'>
           Go Back
         </Link>
       </form>

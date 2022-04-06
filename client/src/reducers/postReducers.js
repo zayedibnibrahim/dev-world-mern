@@ -55,9 +55,9 @@ export const singlePostReducer = (state = { post: {} }, action) => {
 
   switch (type) {
     case SINGLE_POST_REQUEST:
-      return { loading: true }
+      return { ...state, loading: true }
     case SINGLE_POST_SUCCESS:
-      return { loading: false, post: payload }
+      return { ...state, loading: false, post: payload }
     case COMMENT_DELETE_SUCCESS:
       return {
         ...state,
@@ -72,7 +72,7 @@ export const singlePostReducer = (state = { post: {} }, action) => {
     case COMMENT_CREATE_SUCCESS:
       return { ...state, post: { ...state.post, comments: payload } }
     case SINGLE_POST_FAIL:
-      return { loading: false, error: payload }
+      return { ...state, loading: false, error: payload }
     case SINGLE_POST_RESET:
       return {}
     default:

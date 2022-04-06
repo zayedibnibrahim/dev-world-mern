@@ -35,7 +35,7 @@ const SinglePostScreen = () => {
   }, [params, dispatch])
   return (
     <section className='container'>
-      <Link to='/posts' className='btn'>
+      <Link to='/dev/posts' className='btn'>
         Back To Posts
       </Link>
       <div className='post bg-white p-1 my-1'>

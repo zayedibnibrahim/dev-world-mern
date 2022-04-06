@@ -37,7 +37,7 @@ const PostCard = ({
         >
           <i className='fas fa-thumbs-down'></i>
         </button>
-        <Link to={`/post/${post._id}`} className='btn btn-primary'>
+        <Link to={`/dev/post/${post._id}`} className='btn btn-primary'>
           Discussion{' '}
           <span className='comment-count'>{post.comments?.length}</span>
         </Link>

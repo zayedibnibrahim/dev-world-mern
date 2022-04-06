@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { userAddEducation, userCurrentProfile } from '../actions/profileActions'
 import Spinner from '../components/Spinner'
 import { ADD_EDUCATION_RESET } from '../constants/profileConstants'
@@ -47,7 +47,7 @@ const AddEducationScreen = () => {
 
   useEffect(() => {
     if (success) {
-      navigate('/dashboard')
+      navigate('/dev/dashboard')
       dispatch({ type: ADD_EDUCATION_RESET })
     } else {
       dispatch(userCurrentProfile())
@@ -137,9 +137,9 @@ const AddEducationScreen = () => {
           ></textarea>
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link className='btn btn-light my-1' to='/dev/dashboard'>
           Go Back
-        </a>
+        </Link>
       </form>
     </section>
   )

@@ -9,7 +9,7 @@ const LoginScreen = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location.state?.from?.pathname || '/dashboard'
+  const from = location.state?.from?.pathname || '/dev/dashboard'
 
   const userLogin = useSelector((state) => state.userLogin)
   const { error, userInfo } = userLogin

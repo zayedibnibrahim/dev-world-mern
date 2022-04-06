@@ -22,8 +22,8 @@ const ProfileGithubBlock = ({ githubusername }) => {
         <i className='fab fa-github'></i> Github Repos
       </h2>
       {gitInfo && gitInfo.length !== 0
-        ? gitInfo.map((git) => (
-            <div className='repo bg-white p-1 my-1'>
+        ? gitInfo.map((git, index) => (
+            <div className='repo bg-white p-1 my-1' key={index + 1}>
               <div>
                 <h4>
                   <a
