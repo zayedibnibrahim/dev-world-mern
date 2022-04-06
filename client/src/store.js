@@ -2,11 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { userLoginReducer, userRegisterReducer } from './reducers/authReducers'
-import {
-  createPostReducer,
-  getPostsReducer,
-  singlePostReducer,
-} from './reducers/postReducers'
+import { getPostsReducer, singlePostReducer } from './reducers/postReducers'
 import {
   addEducationReducer,
   addExperienceReducer,

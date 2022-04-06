@@ -9,6 +9,7 @@ import {
   postsList,
 } from '../actions/postActions'
 import PostCard from '../components/PostCard'
+import Spinner from '../components/Spinner'
 import { SINGLE_POST_RESET } from '../constants/postConstants'
 
 const PostsScreen = () => {
@@ -48,47 +49,57 @@ const PostsScreen = () => {
 
   return (
     <section className='container'>
-      <h1 className='large text-primary'>Posts</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Welcome to the community!
-      </p>
-      {error && <p>{error}</p>}
-      <div className='post-form'>
-        <div className='bg-primary p'>
-          <h3>Say Something...</h3>
-        </div>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <h1 className='large text-primary'>Posts</h1>
+          <p className='lead'>
+            <i className='fas fa-user'></i> Welcome to the community!
+          </p>
+          {error && <p>{error}</p>}
+          <div className='post-form'>
+            <div className='bg-primary p'>
+              <h3>Say Something...</h3>
+            </div>
 
-        <form className='form my-1' onSubmit={onSubmit}>
-          <textarea
-            name='text'
-            cols='30'
-            rows='5'
-            placeholder='Create a post'
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            required
-          ></textarea>
-          <input type='submit' className='btn btn-dark my-1' value='Submit' />
-        </form>
-      </div>
-
-      <div className='posts'>
-        {posts && posts.length
-          ? posts.map((post) => (
-              <PostCard
-                key={post._id}
-                post={post}
-                likeHandler={likeHandler}
-                disLikeHandler={disLikeHandler}
-                userInfo={userInfo}
-                deleteHandler={deleteHandler}
+            <form className='form my-1' onSubmit={onSubmit}>
+              <textarea
+                name='text'
+                cols='30'
+                rows='5'
+                placeholder='Create a post'
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                required
+              ></textarea>
+              <input
+                type='submit'
+                className='btn btn-dark my-1'
+                value='Submit'
               />
-            ))
-          : posts &&
-            !posts.length && (
-              <p style={{ marginTop: '20px' }}>Sorry no post available</p>
-            )}
-      </div>
+            </form>
+          </div>
+
+          <div className='posts'>
+            {posts && posts.length
+              ? posts.map((post) => (
+                  <PostCard
+                    key={post._id}
+                    post={post}
+                    likeHandler={likeHandler}
+                    disLikeHandler={disLikeHandler}
+                    userInfo={userInfo}
+                    deleteHandler={deleteHandler}
+                  />
+                ))
+              : posts &&
+                !posts.length && (
+                  <p style={{ marginTop: '20px' }}>Sorry no post available</p>
+                )}
+          </div>
+        </>
+      )}
     </section>
   )
 }

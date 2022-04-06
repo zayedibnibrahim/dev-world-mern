@@ -8,7 +8,7 @@ const CreateProfileScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const createProfile = useSelector((state) => state.createProfile)
-  const { error, success, loading } = createProfile
+  const { error, success } = createProfile
 
   const [formData, setFormData] = useState({
     company: '',
@@ -73,6 +73,7 @@ const CreateProfileScreen = () => {
 
   return (
     <section className='container'>
+      {error && <h2>{error}</h2>}
       <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>
           <select

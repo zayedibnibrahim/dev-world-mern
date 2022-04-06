@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { profileById } from '../actions/profileActions'
 import { GET_PROFILE_RESET } from '../constants/profileConstants'
