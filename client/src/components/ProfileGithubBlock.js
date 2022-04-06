@@ -26,7 +26,11 @@ const ProfileGithubBlock = ({ githubusername }) => {
             <div className='repo bg-white p-1 my-1'>
               <div>
                 <h4>
-                  <a href='/#' target='_blank' rel='noopener noreferrer'>
+                  <a
+                    href={git.html_url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
                     {git.name}
                   </a>
                 </h4>

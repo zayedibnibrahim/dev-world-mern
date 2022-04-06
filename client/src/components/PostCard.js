@@ -12,7 +12,7 @@ const PostCard = ({
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
-        <a href='profile.html'>
+        <a href={`/profile/${post.user}`}>
           <img className='round-img' src={post.avatar} alt='' />
           <h4>{post.name}</h4>
         </a>
